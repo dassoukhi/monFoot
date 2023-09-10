@@ -1,13 +1,12 @@
 "use client";
 import { Bars4Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import React, { useState } from "react";
-import Button from "./Button";
 import useScrollDirection from "@/lib/useScrollDirection";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Avatar from "./Avatar";
 import SideBar from "./SideBar";
 import Image from "next/image";
-import monFoot from "@/public/monFoot.png";
+import monFoot from "@/app/MonSam.png";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/20/solid";
 
 function Header() {

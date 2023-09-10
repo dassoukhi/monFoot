@@ -3,14 +3,16 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import React, { useState } from "react";
 
 type props = {
-  handleData: (motif: string) => void;
+  handleData?: (motif: string) => void;
 };
 function SearchBar({ handleData }: props) {
   const [search, setSearch] = useState<string>("");
   console.log("search:", search);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event?.target?.value);
-    handleData(event?.target?.value);
+    if (handleData) {
+      handleData(event?.target?.value);
+    }
   };
   return (
     <div className="bg-slate-100 p-2 mb-4 flex rounded-2xl">

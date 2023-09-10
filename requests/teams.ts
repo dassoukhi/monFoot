@@ -1,4 +1,3 @@
-"use server";
 import { createRedisInstance } from "@/lib/redis";
 import getLeagues from "./leagues";
 import { User } from "next-auth";

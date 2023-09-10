@@ -1,4 +1,4 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/nextauth";
 import Removefavoris from "@/requests/RemoveFavoris";
 import addTofavoris from "@/requests/addToFavoris";
 import type { NextApiRequest, NextApiResponse } from "next";

@@ -2,7 +2,7 @@ import React from "react";
 import getAllTeams from "@/requests/teams";
 import EquipeCard from "@/components/EquipeCard";
 import { User, getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/nextauth";
 
 async function Search() {
   const session = await getServerSession(authOptions);

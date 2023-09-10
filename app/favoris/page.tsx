@@ -1,8 +1,8 @@
 import FavorisCard from "@/components/FavorisCard";
 import { User, getServerSession } from "next-auth";
 import React from "react";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 import getFavoris from "@/requests/getFavoris";
+import { authOptions } from "@/lib/nextauth";
 
 async function Favoris() {
   const session = await getServerSession(authOptions);

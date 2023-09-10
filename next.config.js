@@ -8,9 +8,6 @@ const nextConfig = {
       "media-3.api-sports.io",
     ],
   },
-  experimental: {
-    serverActions: true,
-  },
 };
 
 module.exports = nextConfig;
