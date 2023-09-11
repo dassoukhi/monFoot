@@ -45,6 +45,7 @@ function Match({ fixture, teams }: EventCaming) {
         <div className="flex-1 flex items-center justify-center  gap-4">
           <div className=" flex flex-col justify-center items-center gap-1">
             <Image
+              // loader={() => teams?.home?.logo}
               src={teams?.home?.logo}
               alt="team home"
               width={64}
