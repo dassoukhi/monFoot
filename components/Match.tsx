@@ -66,6 +66,7 @@ function Match({ fixture, teams }: EventCaming) {
           <span className="text-2xl">{0}</span>
           <div className=" flex flex-col justify-center items-center gap-1">
             <Image
+              loader={() => teams?.away?.logo}
               src={teams?.away?.logo}
               alt="team away"
               width={64}
