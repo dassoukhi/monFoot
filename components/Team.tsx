@@ -32,6 +32,7 @@ function Team({ team, session }: props) {
     <div className="flex w-full items-center justify-center p-2 bg-blue-50 gap-4 rounded-md shadow-md">
       <div className="flex-1 flex items-center  gap-2 pl-2">
         <Image
+          loader={() => currentTeam?.logo}
           src={currentTeam?.logo}
           alt="team"
           width={64}
