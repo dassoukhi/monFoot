@@ -3,7 +3,8 @@ import { leagues } from "@/utils/leagues";
 import axios from "axios";
 import moment from "moment";
 
-const redis = createRedisInstance();
+const redis =
+  process.env.NODE_ENV === "development" ? createRedisInstance() : null;
 const MAX_AGE = 60_000 * 60 * 24; // 1 hour
 const EXPIRY_MS = `PX`; // milliseconds
 const config = (idLeague: string) => {
@@ -21,7 +22,7 @@ const config = (idLeague: string) => {
 const getLeagues = async () => {
   try {
     const key = "leaguesDataKey";
-    const cached = await redis.get(key);
+    const cached = await redis?.get(key);
     if (cached) {
       return JSON.parse(cached);
     }
@@ -38,7 +39,7 @@ const getLeagues = async () => {
         }
       })
     );
-    await redis.set(key, JSON.stringify(results), EXPIRY_MS, MAX_AGE);
+    await redis?.set(key, JSON.stringify(results), EXPIRY_MS, MAX_AGE);
     return results;
   } catch (error) {
     console.log(error);

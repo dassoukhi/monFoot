@@ -3,7 +3,9 @@ import getLeagues from "./leagues";
 import { User } from "next-auth";
 import { prisma } from "@/lib/instancePrisma";
 
-const redis = createRedisInstance();
+const redis =
+  process.env.NODE_ENV === "development" ? createRedisInstance() : null;
+
 const MAX_AGE = 60_000 * 60 * 24; // 1 hour
 const EXPIRY_MS = `PX`; // milliseconds
 const existTeam = (
@@ -32,7 +34,7 @@ const getAllTeams = async (user?: User) => {
       .then((favoris) => favoris?.favoriteTeams)) as string[];
   }
   const key = "teamsDataKey";
-  const cached = await redis.get(key);
+  const cached = await redis?.get(key);
   if (cached) {
     const data = JSON.parse(cached);
     if (user) {
@@ -77,7 +79,7 @@ const getAllTeams = async (user?: User) => {
       return;
     });
   }
-  await redis.set(key, JSON.stringify(teams), EXPIRY_MS, MAX_AGE);
+  await redis?.set(key, JSON.stringify(teams), EXPIRY_MS, MAX_AGE);
   return teams;
 };
 
