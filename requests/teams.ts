@@ -36,6 +36,8 @@ const getAllTeams = async (user?: User) => {
   const key = "teamsDataKey";
   const cached = await redis?.get(key);
   if (cached) {
+    console.log("from cache: ");
+
     const data = JSON.parse(cached);
     if (user) {
       const teams = data.map((team: Team) => {

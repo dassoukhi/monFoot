@@ -24,6 +24,7 @@ const getLeagues = async () => {
     const key = "leaguesDataKey";
     const cached = await redis?.get(key);
     if (cached) {
+      console.log("from cache: ");
       return JSON.parse(cached);
     }
     const results = await Promise.all(
