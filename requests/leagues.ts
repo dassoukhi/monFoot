@@ -3,8 +3,7 @@ import { leagues } from "@/utils/leagues";
 import axios from "axios";
 import moment from "moment";
 
-const redis =
-  process.env.NODE_ENV === "development" ? createRedisInstance() : null;
+const redis = createRedisInstance();
 const MAX_AGE = 60_000 * 60 * 24; // 1 hour
 const EXPIRY_MS = `PX`; // milliseconds
 const config = (idLeague: string) => {

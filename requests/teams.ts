@@ -3,8 +3,7 @@ import getLeagues from "./leagues";
 import { User } from "next-auth";
 import { prisma } from "@/lib/instancePrisma";
 
-const redis =
-  process.env.NODE_ENV === "development" ? createRedisInstance() : null;
+const redis = createRedisInstance();
 
 const MAX_AGE = 60_000 * 60 * 24; // 1 hour
 const EXPIRY_MS = `PX`; // milliseconds

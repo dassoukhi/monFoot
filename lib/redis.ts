@@ -2,9 +2,8 @@ import Redis, { RedisOptions } from "ioredis";
 
 const getRedisConfiguration = () => {
   return {
-    host: "127.0.0.1",
-    // password: process.env.REDIS_PASSWORD,
-    port: 6379,
+    host: process.env.URL_REDIS,
+    port: process.env.NODE_ENV === "development" ? 6379 : null,
   };
 };
 
