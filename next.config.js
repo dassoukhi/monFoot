@@ -9,6 +9,9 @@ const nextConfig = {
     ],
     formats: ["image/webp"],
   },
+  experimental: {
+    appDir: true, // <---- Comment and Uncomment this
+  },
 };
 
 // module.exports = nextConfig;
