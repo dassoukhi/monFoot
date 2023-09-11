@@ -27,8 +27,6 @@ function SideBar({ isOpen }: propss) {
       }`}
     >
       <div className="p-4 flex-1">
-        {/* Search */}
-        <SearchBar />
         {/* Bloacs */}
         <BlocSideBar title={"Support"} blocs={blocSupport} />
         <BlocSideBar title={"Suivez-nous"} blocs={blocFollow} />

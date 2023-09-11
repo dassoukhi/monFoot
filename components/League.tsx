@@ -15,10 +15,10 @@ function League({ league, matchs }: props) {
         <Image
           loader={() => league?.logo}
           src={league?.logo}
-          width={24}
-          height={24}
+          width={64}
+          height={64}
           alt={league?.name}
-          className="h-auto w-auto"
+          className="h-8 w-8"
         />
         <p className="text-md text-gray-800">{league?.name}</p>
       </div>
