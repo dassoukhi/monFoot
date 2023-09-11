@@ -6,7 +6,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Avatar from "./Avatar";
 import SideBar from "./SideBar";
 import Image from "next/image";
-import monFoot from "@/app/MonSam.png";
+import monFoot from "@/app/monFoot.png";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/20/solid";
 
 function Header() {

@@ -9,7 +9,10 @@ type props = {
 };
 function League({ league, matchs }: props) {
   return (
-    <div className="bg-slate-50 flex-1 p-2 flex flex-col gap-4 rounded-xl shadow-md pb-8">
+    <div
+      className="bg-slate-50 flex-1 p-2 flex flex-col gap-4 rounded-xl shadow-md pb-8"
+      id={league?.id.toString()}
+    >
       {/* header */}
       <div className="flex items-center gap-2">
         <Image
