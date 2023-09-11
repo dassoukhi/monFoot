@@ -3,7 +3,11 @@ import Redis, { RedisOptions } from "ioredis";
 const getRedisConfiguration = () => {
   return {
     host: process.env.URL_REDIS,
-    port: process.env.NODE_ENV === "development" ? 6379 : null,
+    port: process.env.NODE_ENV === "development" ? 6379 : 40057,
+    password:
+      process.env.NODE_ENV === "development"
+        ? null
+        : process.env.PASSWORD_REDIS,
   };
 };
 
@@ -26,6 +30,9 @@ export function createRedisInstance(config = getRedisConfiguration()) {
 
     if (config.port) {
       options.port = Number(config.port);
+    }
+    if (config.password) {
+      options.password = config.password;
     }
 
     const redis = new Redis(options);
