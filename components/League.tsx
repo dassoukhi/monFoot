@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import Match from "./Match";
@@ -12,6 +13,7 @@ function League({ league, matchs }: props) {
       {/* header */}
       <div className="flex items-center gap-2">
         <Image
+          loader={() => league?.logo}
           src={league?.logo}
           width={24}
           height={24}
