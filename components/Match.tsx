@@ -7,10 +7,14 @@ const formatDate = (date: string) => {
   const today = moment();
   const day = current.date();
   const month = current.month() + 1;
-  if (current.date() === today.date()) {
+
+  if (current.month() === today.month() && current.date() === today.date()) {
     return "Aujourd'hui";
   }
-  if (current.date() === today.date() + 1) {
+  if (
+    current.month() === today.month() &&
+    current.date() === today.date() + 1
+  ) {
     return "Demain";
   }
   let dayText = "";

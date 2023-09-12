@@ -33,8 +33,18 @@ const getFavorisMatch = async (user: User) => {
       return temps;
     }
   });
-
-  return data;
+  const sorted = data.sort(
+    (
+      a: { matchs: { fixture: { date: string } }[] },
+      b: { matchs: { fixture: { date: string } }[] }
+    ) => {
+      return (
+        Date.parse(a?.matchs?.[0]?.fixture?.date) -
+        Date.parse(b.matchs?.[0]?.fixture?.date)
+      );
+    }
+  );
+  return sorted;
 };
 
 export default getFavorisMatch;

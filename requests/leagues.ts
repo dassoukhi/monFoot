@@ -11,7 +11,7 @@ const config = (idLeague: string) => {
   return {
     method: "get",
     maxBodyLength: Infinity,
-    url: `https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${idLeague}&season=${year}&next=10`,
+    url: `https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${idLeague}&next=10`,
     headers: {
       "X-RapidAPI-Key": "7b3e6cad43msh7f76e0ea302ba91p1f7947jsn714bd238e070",
       "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com",
@@ -24,7 +24,9 @@ const getLeagues = async () => {
     const cached = await redis?.get(key);
     if (cached) {
       console.log("from cache: ");
-      return JSON.parse(cached);
+
+      const sortedArray = JSON.parse(cached);
+      return sortedArray;
     }
     const results = await Promise.all(
       leagues.map(async (league) => {
@@ -39,8 +41,14 @@ const getLeagues = async () => {
         }
       })
     );
-    await redis?.set(key, JSON.stringify(results), EXPIRY_MS, MAX_AGE);
-    return results;
+    const sorted = results.sort((a: any, b: any) => {
+      return (
+        Date.parse(a?.[0]?.matchs?.[0]?.fixture?.date) -
+        Date.parse(b?.[0]?.matchs?.[0]?.fixture?.date)
+      );
+    });
+    await redis?.set(key, JSON.stringify(sorted), EXPIRY_MS, MAX_AGE);
+    return sorted;
   } catch (error) {
     console.log(error);
   }

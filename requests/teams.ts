@@ -80,8 +80,11 @@ const getAllTeams = async (user?: User) => {
       return;
     });
   }
-  await redis?.set(key, JSON.stringify(teams), EXPIRY_MS, MAX_AGE);
-  return teams;
+  const sorted = teams.sort((a, b) => {
+    return a?.name.localeCompare(b?.name);
+  });
+  await redis?.set(key, JSON.stringify(sorted), EXPIRY_MS, MAX_AGE);
+  return sorted;
 };
 
 export default getAllTeams;
