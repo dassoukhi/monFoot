@@ -4,8 +4,15 @@ import React from "react";
 
 const formatDate = (date: string) => {
   const current = moment(date);
+  const today = moment();
   const day = current.date();
   const month = current.month() + 1;
+  if (current.date() === today.date()) {
+    return "Aujourd'hui";
+  }
+  if (current.date() === today.date() + 1) {
+    return "Demain";
+  }
   let dayText = "";
 
   switch (current.day()) {
@@ -33,13 +40,22 @@ const formatDate = (date: string) => {
   }
   return `${dayText},${day}/${month < 10 ? "0" + month : month}`;
 };
+const formatHour = (date: string) => {
+  const current = moment(date);
+  const hour = current.hour();
+  const munites = current?.minutes();
+  let munitesText = munites === 0 ? "00" : munites;
+
+  return `${hour}:${munitesText}`;
+};
 function Match({ fixture, teams }: EventCaming) {
   //   console.log("fixture:", fixture, "temas:", teams);
 
   return (
     <div className="bg-blue-50 rounded-r-lg flex flex-col pb-2 pt-1 items-center shadow-md">
-      <div>
+      <div className="flex flex-col items-center">
         <p className="text-xs text-gray-500">{formatDate(fixture?.date)}</p>
+        <p className="text-xs text-gray-500">{formatHour(fixture?.date)}</p>
       </div>
       <div className="flex w-full px-4 items-center ">
         <div className="flex-1 flex items-center justify-center  gap-4">

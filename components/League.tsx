@@ -10,6 +10,7 @@ type props = {
 };
 function League({ league, matchs }: props) {
   const router = useRouter();
+
   useEffect(() => {
     router.refresh();
   }, [router]);
