@@ -57,13 +57,13 @@ function Match({ fixture, teams }: EventCaming) {
             </p>
           </div>
           {/* score */}
-          <span className="text-2xl">{0}</span>
+          {/* <span className="text-2xl">{0}</span> */}
         </div>
         <div className="p-4 flex">
           <span className="text-lg">-</span>
         </div>
         <div className="flex-1 flex items-center justify-center  gap-4">
-          <span className="text-2xl">{0}</span>
+          {/* <span className="text-2xl">{0}</span> */}
           <div className=" flex flex-col justify-center items-center gap-1">
             <Image
               loader={() => teams?.away?.logo}

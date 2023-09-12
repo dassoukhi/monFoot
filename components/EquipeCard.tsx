@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import Team from "./Team";
 import { useSession } from "next-auth/react";
@@ -17,6 +17,7 @@ function EquipeCard({ teams }: props) {
     );
     setFilterTeams(temp);
   };
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-2">
       <SearchBar handleData={handleTeams} />

@@ -1,13 +1,18 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import Match from "./Match";
+import { useRouter } from "next/navigation";
 
 type props = {
   league: league;
   matchs: EventCaming[];
 };
 function League({ league, matchs }: props) {
+  const router = useRouter();
+  useEffect(() => {
+    router.refresh();
+  }, [router]);
   return (
     <div
       className="bg-slate-50 flex-1 p-2 flex flex-col gap-4 rounded-xl shadow-md pb-8"

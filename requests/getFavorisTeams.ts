@@ -2,7 +2,7 @@ import { prisma } from "@/lib/instancePrisma";
 import { User } from "next-auth";
 import getAllTeams from "./teams";
 
-const getFavoris = async (user: User) => {
+const getFavorisTeams = async (user: User) => {
   if (!user) {
     return null;
   }
@@ -23,4 +23,4 @@ const getFavoris = async (user: User) => {
   return favorisTeams;
 };
 
-export default getFavoris;
+export default getFavorisTeams;
