@@ -11,7 +11,9 @@ const getFavorisMatch = async (user: User) => {
       where: { email: user.email as string },
     })
     .then((favoris) => favoris?.favoriteTeams);
-
+  if (!favoritesIds?.length) {
+    return null;
+  }
   const allLeagues = await getLeagues();
 
   const data = allLeagues?.map((league: any) => {

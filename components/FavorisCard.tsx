@@ -6,27 +6,57 @@ import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import Button from "./Button";
 import LoaderCercle from "./LoaderCercle";
+import League from "./League";
 
 type props = {
-  teams: Team[];
+  favorites: any[];
 };
-function FavorisCard({ teams }: props) {
+function FavorisCard({ favorites }: props) {
   const router = useRouter();
   const session = useSession();
 
   useEffect(() => {
     router.refresh();
   }, [router]);
+  console.log(favorites?.length);
 
   if (session?.status === "loading") {
     return <LoaderCercle />;
+  }
+  if (favorites?.length) {
+    return (
+      <div className="p-2 w-full flex flex-col gap-4">
+        {favorites?.map(
+          (
+            item: JSX.IntrinsicAttributes & {
+              league: {
+                id: number;
+                name: string;
+                country: string;
+                logo: string;
+                flag: string;
+                season: number;
+                round: string;
+              };
+              matchs: any[];
+            },
+            index: number
+          ) => {
+            if (item) {
+              return <League key={index} {...item} />;
+            }
+          }
+        )}
+        <div className="h-12"></div>
+      </div>
+    );
   }
   return (
     <div className="flex h-[78vh] flex-col items-center justify-between p-2 overflow-y-scroll">
       {session?.status == "unauthenticated" ? (
         <div className="w-full h-[70vh] flex flex-col items-center justify-center gap-4">
-          <p className="text-sm text-gray-600">
-            {"Connectez-vous pour voir vos èquipes favoris"}
+          <p className="text-sm text-gray-600 text-center">
+            {"Connectez-vous pour voir le match  de vos èquipes favorites"}
           </p>
           <Button
             text={"Se connecter"}
@@ -36,12 +66,7 @@ function FavorisCard({ teams }: props) {
         </div>
       ) : (
         <div className="bg-slate-50 flex-1 h-1/2 py-4 px-8 flex flex-col gap-4 rounded-xl shadow-md w-full">
-          <div className="w-full ">
-            <p className="text-gray-500">Favoris</p>
-          </div>
-          {teams?.length ? (
-            teams?.map((item) => <Team key={item?.id} team={item} />)
-          ) : (
+          {!favorites && (
             <div className="h-4/6 flex justify-center items-center flex-col gap-5">
               <p className="text-gray-500 text-sm">
                 {"Vous n'avez pas d'équipe(s) favorite(s)"}
