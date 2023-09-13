@@ -1,11 +1,11 @@
 import { createRedisInstance } from "@/lib/redis";
+import { MAX_AGE } from "@/utils/expireRedis";
 import { leagues } from "@/utils/leagues";
 import axios from "axios";
 import moment from "moment";
 
 const redis = createRedisInstance();
-const MAX_AGE = 60_000 * 60 * 24; // 1 hour
-const EXPIRY_MS = `PX`; // milliseconds
+// milliseconds
 const config = (idLeague: string) => {
   const year = moment().year();
   return {
@@ -47,7 +47,7 @@ const getLeagues = async () => {
         Date.parse(b?.[0]?.matchs?.[0]?.fixture?.date)
       );
     });
-    await redis?.set(key, JSON.stringify(sorted), EXPIRY_MS, MAX_AGE);
+    await redis?.set(key, JSON.stringify(sorted), "PX", MAX_AGE);
     return sorted;
   } catch (error) {
     console.log(error);

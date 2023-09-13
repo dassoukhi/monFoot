@@ -14,8 +14,8 @@ function CategorieTabs() {
     <div className="bg-blue-50 flex flex-row p-2 w-full gap-2 whitespace-nowrap overflow-x-scroll no-scrollbar sticky top-0">
       {leagues?.map((categorie) => (
         <div
-          className="p-2 bg-slate-200 rounded-xl shadow-sm  cursor-pointer hover:bg-slate-300"
-          key={categorie.name}
+          className="p-2 bg-slate-200 rounded-xl shadow-sm cursor-pointer hover:bg-slate-300 transition duration-150 ease-in-out"
+          key={`cat${categorie.name}`}
           onClick={() => handleClickScroll(categorie.id)}
         >
           <p className="text-gray-700 text-sm">{categorie.name}</p>

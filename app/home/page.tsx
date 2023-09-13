@@ -1,6 +1,3 @@
-// import { getServerSession } from "next-auth";
-// import { authOptions } from "./api/auth/[...nextauth]/route";
-
 import CategorieTabs from "@/components/CategorieTabs";
 import League from "@/components/League";
 import getLeagues from "@/requests/leagues";

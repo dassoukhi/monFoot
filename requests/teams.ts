@@ -2,11 +2,9 @@ import { createRedisInstance } from "@/lib/redis";
 import getLeagues from "./leagues";
 import { User } from "next-auth";
 import { prisma } from "@/lib/instancePrisma";
+import { MAX_AGE } from "@/utils/expireRedis";
 
 const redis = createRedisInstance();
-
-const MAX_AGE = 60_000 * 60 * 24; // 1 hour
-const EXPIRY_MS = `PX`; // milliseconds
 const existTeam = (
   teams: { id: number; name: string; logo: string }[],
   id: number
@@ -83,7 +81,7 @@ const getAllTeams = async (user?: User) => {
   const sorted = teams.sort((a, b) => {
     return a?.name.localeCompare(b?.name);
   });
-  await redis?.set(key, JSON.stringify(sorted), EXPIRY_MS, MAX_AGE);
+  await redis?.set(key, JSON.stringify(sorted), "PX", MAX_AGE);
   return sorted;
 };
 
