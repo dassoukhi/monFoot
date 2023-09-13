@@ -7,7 +7,7 @@ import Avatar from "./Avatar";
 import SideBar from "./SideBar";
 import Image from "next/image";
 import monFoot from "@/app/MonFoot.png";
-import { ArrowRightOnRectangleIcon } from "@heroicons/react/20/solid";
+import { ArrowLeftOnRectangleIcon } from "@heroicons/react/20/solid";
 
 function Header() {
   const session = useSession();
@@ -43,8 +43,8 @@ function Header() {
       />
       {session?.status !== "authenticated" ? (
         // <Button text={"Se connecter"} onClick={() => signIn()} />
-        <ArrowRightOnRectangleIcon
-          className="h-7 w-7 text-gray-600 mr-1"
+        <ArrowLeftOnRectangleIcon
+          className="h-8 w-8 text-gray-600 mr-1"
           onClick={() => signIn()}
         />
       ) : (

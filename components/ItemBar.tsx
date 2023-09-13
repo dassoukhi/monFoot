@@ -4,32 +4,31 @@ type props = {
   path: string;
   Icon: React.ElementType;
 };
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 function ItemBar({ name, path, Icon }: props) {
-  const router = useRouter();
   const routePath = usePathname();
   const active = routePath?.includes(path);
   return (
-    <div
-      className="text-xs flex flex-col items-center cursor-pointer"
-      onClick={() => router.push(path)}
-    >
-      {Icon && (
-        <Icon
-          className={`h-6 w-6 ${
+    <Link href={path}>
+      <div className="text-xs flex flex-col items-center cursor-pointer">
+        {Icon && (
+          <Icon
+            className={`h-6 w-6 ${
+              active ? "text-gray-800" : "text-gray-400"
+            } hover:text-gray-800`}
+          />
+        )}
+        <p
+          className={`${
             active ? "text-gray-800" : "text-gray-400"
           } hover:text-gray-800`}
-        />
-      )}
-      <p
-        className={`${
-          active ? "text-gray-800" : "text-gray-400"
-        } hover:text-gray-800`}
-      >
-        {name}
-      </p>
-    </div>
+        >
+          {name}
+        </p>
+      </div>
+    </Link>
   );
 }
 
