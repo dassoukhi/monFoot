@@ -20,10 +20,12 @@ const blocFollow = [
   { title: "Tiktok" },
 ];
 function SideBar({ isOpen }: propss) {
+  console.log(isOpen);
+
   return (
     <div
-      className={`top-[65px] left-0 w-[100vw] overflow-y-scroll bg-blue-50 fixed sidebar-content ease-in-out duration-300 flex justify-start ${
-        isOpen ? "translate-x-0 " : "-translate-x-full"
+      className={`top-[65px] left-0 w-[100vw] overflow-y-scroll bg-blue-50 fixed sidebar-content ease-in-out duration-300 flex justify-start md:h-[100vh] md:w-56  ${
+        isOpen ? "md:left-44 translate-x-0 md:shadow-2xl" : "-translate-x-full"
       }`}
     >
       <div className="p-4 flex-1">

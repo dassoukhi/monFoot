@@ -1,39 +1,44 @@
 "use client";
 import { Bars4Icon, XMarkIcon } from "@heroicons/react/20/solid";
-import React, { useState } from "react";
-import useScrollDirection from "@/lib/useScrollDirection";
+import React from "react";
+// import useScrollDirection from "@/lib/useScrollDirection";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Avatar from "./Avatar";
 import SideBar from "./SideBar";
 import Image from "next/image";
 import monFoot from "@/app/MonFoot.png";
 import { ArrowLeftOnRectangleIcon } from "@heroicons/react/20/solid";
+import { useSideBar } from "@/context/SideBarContext";
 
 function Header() {
   const session = useSession();
-  const [openSideBar, setOpenSideBar] = useState(false);
+  // const [openSideBar, setOpenSideBar] = useState(false);
+  const { isOpen, handleSideBar } = useSideBar();
 
-  const scrollDirection = useScrollDirection();
+  // const scrollDirection = useScrollDirection();
   return (
     <div
-      className={`bg-blue-50 shadow-md ${
-        openSideBar ? "fixed w-full" : "sticky"
-      } ${
-        !openSideBar && scrollDirection === "down" ? "-top-24" : "top-0"
-      } h-16 px-2 flex items-center justify-between transition-all duration-200 ease-in`}
+      className={`bg-blue-50 shadow-md fixed w-full h-16 px-2 flex items-center justify-between z-50`}
     >
-      <SideBar isOpen={openSideBar} />
-      {openSideBar ? (
-        <XMarkIcon
-          className="h-6 w-6 text-gray-600"
-          onClick={() => setOpenSideBar(!openSideBar)}
-        />
-      ) : (
-        <Bars4Icon
-          className="h-6 w-6 text-black-500"
-          onClick={() => setOpenSideBar(!openSideBar)}
-        />
-      )}
+      <SideBar isOpen={isOpen} />
+      <div className="">
+        {isOpen ? (
+          <div className="md:hidden">
+            <XMarkIcon
+              className="h-6 w-6 text-gray-600"
+              onClick={() => handleSideBar()}
+            />
+          </div>
+        ) : (
+          <div className="md:hidden">
+            {" "}
+            <Bars4Icon
+              className="h-6 w-6 text-black-500"
+              onClick={() => handleSideBar()}
+            />
+          </div>
+        )}
+      </div>
       <Image
         src={monFoot}
         width={64}

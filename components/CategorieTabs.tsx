@@ -11,7 +11,7 @@ function CategorieTabs() {
   };
 
   return (
-    <div className="bg-blue-50 flex flex-row p-2 w-full gap-2 whitespace-nowrap overflow-x-scroll no-scrollbar sticky top-0">
+    <div className="bg-blue-50 flex flex-row h-16 w-full gap-2 whitespace-nowrap overflow-x-scroll no-scrollbar sticky top-16 py-3 md:pl-48">
       {leagues?.map((categorie) => (
         <div
           className="p-2 bg-slate-200 rounded-xl shadow-sm cursor-pointer hover:bg-slate-300 transition duration-150 ease-in-out"

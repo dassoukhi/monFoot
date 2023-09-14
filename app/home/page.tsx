@@ -7,10 +7,11 @@ export default async function Home() {
   const data = await getLeagues();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between ">
+    <main className="flex min-h-screen flex-col items-center justify-between">
+      <div className="h-16"></div>
       {/* categorie tabs */}
       <CategorieTabs />
-      <div className="p-2 w-full flex flex-col gap-4">
+      <div className="p-2 w-full flex flex-col gap-4 md:px-64">
         {data?.map(
           (
             item: (JSX.IntrinsicAttributes & {

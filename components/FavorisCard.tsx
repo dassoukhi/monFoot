@@ -25,7 +25,7 @@ function FavorisCard({ favorites }: props) {
   }
   if (favorites?.length) {
     return (
-      <div className="p-2 w-full flex flex-col gap-4">
+      <div className="p-2 w-full flex flex-col gap-4 ">
         {favorites?.map(
           (
             item: JSX.IntrinsicAttributes & {

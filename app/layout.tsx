@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import NavBar from "@/components/NavBar";
 import { NextAuthProvider } from "./NextAuthProvider";
 import { Suspense } from "react";
+import SideBarProvider from "@/context/SideBarContext";
+import LoaderCercle from "@/components/LoaderCercle";
 
 export const metadata: Metadata = {
   title: "Mon Foot",
@@ -20,14 +22,16 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/public/manifest.json" />
       </head>
-      <NextAuthProvider>
-        <body>
-          <Header />
-          <Suspense fallback={<p>Loading ...</p>}>{children}</Suspense>
+      <SideBarProvider>
+        <NextAuthProvider>
+          <body>
+            <Header />
+            <Suspense fallback={<LoaderCercle />}>{children}</Suspense>
 
-          <NavBar />
-        </body>
-      </NextAuthProvider>
+            <NavBar />
+          </body>
+        </NextAuthProvider>
+      </SideBarProvider>
     </html>
   );
 }

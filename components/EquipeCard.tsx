@@ -19,10 +19,10 @@ function EquipeCard({ teams }: props) {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-2">
+    <div className="flex min-h-screen flex-col items-center justify-between p-2 md:w-3/5">
       <SearchBar handleData={handleTeams} />
 
-      <div className="bg-slate-50 flex-1 py-4 px-8 flex flex-col gap-4 rounded-xl shadow-md pb-8 w-full">
+      <div className="bg-slate-50 flex-1 py-4 px-8 flex flex-col gap-4 rounded-xl shadow-md pb-8 md:px-64">
         {filterTeams?.map((item) => (
           <Team key={item?.id} team={item} session={session?.data as Session} />
         ))}
