@@ -16,7 +16,7 @@ const isFavori = (
   team: { id: number | string; name: string; logo: string },
   iDs: string[]
 ) => {
-  if (iDs && iDs.length) {
+  if (iDs && iDs?.length) {
     return iDs?.includes(team.id.toString());
   }
   return false;
@@ -65,7 +65,7 @@ const getAllTeams = async (user?: User) => {
             }
           }
           if (!existTeam(teams, team?.teams?.home?.id)) {
-            if (isFavori(team?.teams?.away, favoritesIds)) {
+            if (isFavori(team?.teams?.home, favoritesIds)) {
               teams?.push({ ...team?.teams?.home, checked: true });
             } else {
               teams?.push({ ...team?.teams?.home });
