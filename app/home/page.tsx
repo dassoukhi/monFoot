@@ -11,29 +11,36 @@ export default async function Home() {
       <div className="h-16"></div>
       {/* categorie tabs */}
       <CategorieTabs />
-      <div className="p-2 w-full flex flex-col gap-4 md:px-64">
-        {data?.map(
-          (
-            item: (JSX.IntrinsicAttributes & {
-              league: {
-                id: number;
-                name: string;
-                country: string;
-                logo: string;
-                flag: string;
-                season: number;
-                round: string;
-              };
-              matchs: any[];
-            })[],
-            index: Key | null | undefined
-          ) => {
-            if (item && item?.length) {
-              return <League key={index} {...item?.[0]} />;
+      <div className="flex w-full">
+        <div className="w-44 bg-yellow-100 max-md:hidden "></div>
+        <div className="p-2 w-full flex flex-col md:px-8">
+          {data?.map(
+            (
+              item: (JSX.IntrinsicAttributes & {
+                league: {
+                  id: number;
+                  name: string;
+                  country: string;
+                  logo: string;
+                  flag: string;
+                  season: number;
+                  round: string;
+                };
+                matchs: any[];
+              })[],
+              index: Key | null | undefined
+            ) => {
+              if (item && item?.length) {
+                return (
+                  <div key={index} className="md:px-20">
+                    <League {...item?.[0]} />
+                  </div>
+                );
+              }
             }
-          }
-        )}
-        <div className="h-12"></div>
+          )}
+          <div className="h-12"></div>
+        </div>
       </div>
     </main>
   );

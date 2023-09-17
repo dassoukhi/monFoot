@@ -11,7 +11,10 @@ async function Search() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-2">
       <div className="h-16"></div>
-      <EquipeCard teams={data} />
+      <div className="flex items-center justify-center flex-1 w-full">
+        <div className="w-44 max-md:hidden"></div>
+        <EquipeCard teams={data} />
+      </div>
       <div className="h-14 w-ful"></div>
     </main>
   );

@@ -20,10 +20,10 @@ function EquipeCard({ teams }: props) {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-2 md:w-3/5">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center p-2">
       <SearchBar handleData={handleTeams} />
 
-      <div className="bg-slate-50 flex-1 py-4 px-8 flex flex-col gap-4 rounded-xl shadow-md pb-8 md:px-64">
+      <div className="bg-slate-50 flex-1 py-4 px-8 flex flex-col gap-4 rounded-xl shadow-md pb-8 md:w-3/4">
         {filterTeams?.length ? (
           filterTeams?.map((item) => (
             <Team
@@ -33,9 +33,11 @@ function EquipeCard({ teams }: props) {
             />
           ))
         ) : (
-          <div className="w-full flex flex-col items-center p-2 px-16 gap-2 bg-pink-50">
+          <div className="min-h-screen flex flex-col items-center p-2 md:px-16 gap-2">
             <FaceFrownIcon className="h-12 w-12 text-gray-500" />
-            <p className="text-gray-500">{"Aucun équipe trouvée"}</p>
+            <p className="text-gray-500 text-center">
+              {"Aucune équipe trouvée"}
+            </p>
           </div>
         )}
       </div>
