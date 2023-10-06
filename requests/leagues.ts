@@ -3,6 +3,7 @@ import { MAX_AGE } from "@/utils/expireRedis";
 import { leagues } from "@/utils/leagues";
 import axios from "axios";
 import moment from "moment";
+moment.locale("fr");
 
 const redis = createRedisInstance();
 // milliseconds
