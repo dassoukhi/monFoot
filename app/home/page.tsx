@@ -3,6 +3,8 @@ import League from "@/components/League";
 import getLeagues from "@/requests/leagues";
 import { JSX, Key } from "react";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
 export default async function Home() {
   const data = await getLeagues();
 
