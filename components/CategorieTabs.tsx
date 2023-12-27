@@ -6,7 +6,11 @@ function CategorieTabs() {
   const handleClickScroll = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      element.style.scrollMarginTop = "140px";
     }
   };
 
