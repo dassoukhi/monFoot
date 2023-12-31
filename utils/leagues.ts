@@ -12,4 +12,10 @@ export const leagues = [
   { id: "960", name: "Euro Championship - Qualification" },
   { id: "9", name: "Copa America" },
   { id: "34", name: "World Cup - Qualification South America" },
+  { id: "6", name: "Africa Cup of Nations" },
+  { id: "531", name: "UEFA Super Cup" },
+  { id: "45", name: "FA Cup" },
+  { id: "556", name: "Spain Super Cup" },
+  { id: "143", name: "Copa del Rey" },
+  { id: "667", name: "Friendlies Clubs" },
 ];
