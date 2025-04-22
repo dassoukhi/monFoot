@@ -2,11 +2,13 @@ import CategorieTabs from "@/components/CategorieTabs";
 import League from "@/components/League";
 import getLeagues from "@/requests/leagues";
 import { JSX, Key } from "react";
+import { revalidatePath } from "next/cache";
 
 // Opt out of caching for all data requests in the route segment
 export const dynamic = "force-dynamic";
 export default async function Home() {
   const data = await getLeagues();
+  revalidatePath("/home");
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
