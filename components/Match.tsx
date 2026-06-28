@@ -42,14 +42,16 @@ function Match({ fixture, teams, goals, score }: EventCaming) {
       <div className="flex w-full px-4 items-start justify-center gap-3 md:gap-4">
         {/* Équipe domicile */}
         <div className="flex flex-col items-center gap-1 flex-1">
-          <Image
-            src={teams?.home?.logo}
-            alt={`${teams?.home?.name} logo`}
-            width={64}
-            height={64}
-            className="h-12 w-12 md:h-16 md:w-16"
-            unoptimized
-          />
+          <div className="h-12 w-12 md:h-16 md:w-16 relative flex items-center justify-center">
+            <Image
+              src={teams?.home?.logo}
+              alt={`${teams?.home?.name} logo`}
+              width={64}
+              height={64}
+              className="max-h-full max-w-full object-contain"
+              unoptimized
+            />
+          </div>
           <p className="text-xs text-gray-800 dark:text-gray-200 w-[100px] whitespace-nowrap overflow-hidden text-ellipsis text-center">
             {teams?.home?.name}
           </p>
@@ -84,14 +86,16 @@ function Match({ fixture, teams, goals, score }: EventCaming) {
 
         {/* Équipe extérieure */}
         <div className="flex flex-col items-center gap-1 flex-1">
-          <Image
-            src={teams?.away?.logo}
-            alt={`${teams?.away?.name} logo`}
-            width={64}
-            height={64}
-            className="h-12 w-12 md:h-16 md:w-16"
-            unoptimized
-          />
+          <div className="h-12 w-12 md:h-16 md:w-16 relative flex items-center justify-center">
+            <Image
+              src={teams?.away?.logo}
+              alt={`${teams?.away?.name} logo`}
+              width={64}
+              height={64}
+              className="max-h-full max-w-full object-contain"
+              unoptimized
+            />
+          </div>
           <p className="text-xs text-gray-800 dark:text-gray-200 w-[100px] whitespace-nowrap overflow-hidden text-ellipsis text-center">
             {teams?.away?.name}
           </p>
