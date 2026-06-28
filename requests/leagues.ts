@@ -22,36 +22,67 @@ const config = (idLeague: string) => {
 const getLeagues = async () => {
   try {
     const key = "leaguesDataKey";
-    const cached = await redis?.get(key);
-    if (cached) {
-      console.log("from cache: ");
 
-      const sortedArray = JSON.parse(cached);
-      return sortedArray;
+    // Essayer de récupérer depuis le cache
+    try {
+      const cached = await redis?.get(key);
+      if (cached) {
+        console.log("✅ Données chargées depuis le cache Redis");
+        const sortedArray = JSON.parse(cached);
+        return sortedArray;
+      }
+    } catch (cacheError) {
+      console.warn("⚠️ Erreur lecture cache Redis:", cacheError);
     }
+
+    console.log("📡 Chargement des données depuis l'API...");
+
+    // Charger les données depuis l'API avec timeout
     const results = await Promise.all(
       leagues.map(async (league) => {
-        const res = await axios(config(league.id));
-        if (res?.data?.response?.length) {
-          return [
-            {
-              league: res.data.response?.[0]?.league,
-              matchs: res?.data?.response,
-            },
-          ];
+        try {
+          const res = await axios({
+            ...config(league.id),
+            timeout: 8000, // 8 secondes timeout
+          });
+          if (res?.data?.response?.length) {
+            return [
+              {
+                league: res.data.response?.[0]?.league,
+                matchs: res?.data?.response,
+              },
+            ];
+          }
+          return null;
+        } catch (apiError) {
+          console.warn(`⚠️ Erreur API pour ${league.name}:`, apiError);
+          return null;
         }
       })
     );
-    const sorted = results.sort((a: any, b: any) => {
+
+    // Filtrer les résultats null et trier
+    const filteredResults = results.filter((r) => r !== null);
+    const sorted = filteredResults.sort((a: any, b: any) => {
       return (
         Date.parse(a?.[0]?.matchs?.[0]?.fixture?.date) -
         Date.parse(b?.[0]?.matchs?.[0]?.fixture?.date)
       );
     });
-    await redis?.set(key, JSON.stringify(sorted), "PX", MAX_AGE);
+
+    // Sauvegarder dans le cache (ne pas bloquer si ça échoue)
+    try {
+      await redis?.set(key, JSON.stringify(sorted), "PX", MAX_AGE);
+      console.log("✅ Données mises en cache");
+    } catch (cacheError) {
+      console.warn("⚠️ Erreur sauvegarde cache Redis:", cacheError);
+    }
+
     return sorted;
   } catch (error) {
-    console.log(error);
+    console.error("❌ Erreur critique dans getLeagues:", error);
+    // Retourner un tableau vide au lieu de undefined
+    return [];
   }
 };
 

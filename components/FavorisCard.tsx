@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SearchBar from "./SearchBar";
 import Team from "./Team";
 import { useRouter } from "next/navigation";
@@ -14,11 +14,6 @@ type props = {
 function FavorisCard({ favorites }: props) {
   const router = useRouter();
   const session = useSession();
-
-  useEffect(() => {
-    router.refresh();
-  }, [router]);
-  console.log(favorites?.length);
 
   if (session?.status === "loading") {
     return <LoaderCercle />;
