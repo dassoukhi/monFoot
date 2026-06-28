@@ -9,6 +9,7 @@ import Image from "next/image";
 import monFoot from "@/app/MonFoot.png";
 import { ArrowLeftOnRectangleIcon } from "@heroicons/react/20/solid";
 import { useSideBar } from "@/context/SideBarContext";
+import ThemeToggle from "./ThemeToggle";
 
 function Header() {
   const session = useSession();
@@ -18,22 +19,21 @@ function Header() {
   // const scrollDirection = useScrollDirection();
   return (
     <div
-      className={`bg-blue-50 shadow-md fixed w-full h-16 px-2 flex items-center justify-between z-50`}
+      className={`bg-blue-50 dark:bg-gray-800 shadow-md fixed w-full h-16 px-2 flex items-center justify-between z-50`}
     >
       <SideBar isOpen={isOpen} />
-      <div className="">
+      <div className="flex items-center gap-2">
         {isOpen ? (
           <div className="md:hidden">
             <XMarkIcon
-              className="h-6 w-6 text-gray-600"
+              className="h-6 w-6 text-gray-600 dark:text-gray-300"
               onClick={() => handleSideBar()}
             />
           </div>
         ) : (
           <div className="md:hidden">
-            {" "}
             <Bars4Icon
-              className="h-6 w-6 text-black-500"
+              className="h-6 w-6 text-black-500 dark:text-gray-300"
               onClick={() => handleSideBar()}
             />
           </div>
@@ -43,21 +43,23 @@ function Header() {
         src={monFoot}
         width={64}
         height={64}
-        alt="MonSam"
+        alt="MonFoot"
         className="w-20"
       />
-      {session?.status !== "authenticated" ? (
-        // <Button text={"Se connecter"} onClick={() => signIn()} />
-        <ArrowLeftOnRectangleIcon
-          className="h-8 w-8 text-gray-600 mr-1"
-          onClick={() => signIn()}
-        />
-      ) : (
-        <Avatar
-          url={session?.data?.user?.image as string}
-          onClick={() => signOut()}
-        />
-      )}
+      <div className="flex items-center gap-3">
+        <ThemeToggle />
+        {session?.status !== "authenticated" ? (
+          <ArrowLeftOnRectangleIcon
+            className="h-8 w-8 text-gray-600 dark:text-gray-300 mr-1"
+            onClick={() => signIn()}
+          />
+        ) : (
+          <Avatar
+            url={session?.data?.user?.image as string}
+            onClick={() => signOut()}
+          />
+        )}
+      </div>
     </div>
   );
 }

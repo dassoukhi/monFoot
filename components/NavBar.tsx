@@ -21,7 +21,7 @@ function NavBar() {
   const { isOpen, handleSideBar } = useSideBar();
   return (
     <div
-      className={`fixed w-full bottom-0 overflow-y-scroll px-4 pb-5 pt-1 bg-blue-50 flex justify-between border-t-[1px] border-gray-200 md:top-16  md:left-0 md:flex-col md:w-44 md:justify-normal md:gap-6 md:pt-4 md:px-0 z-50 ${
+      className={`fixed w-full bottom-0 overflow-y-scroll px-4 pb-5 pt-1 bg-blue-50 dark:bg-gray-800 flex justify-between border-t-[1px] border-gray-200 dark:border-gray-700 md:top-16  md:left-0 md:flex-col md:w-44 md:justify-normal md:gap-6 md:pt-4 md:px-0 z-50 ${
         isOpen && "md:shadow-2xl"
       }`}
     >

@@ -10,7 +10,7 @@ type props = {
 function League({ league, matchs }: props) {
   return (
     <div
-      className="bg-slate-50 flex-1 p-2 flex flex-col gap-4 rounded-xl shadow-md pb-8 w-full"
+      className="bg-slate-50 dark:bg-gray-800 flex-1 p-2 flex flex-col gap-4 rounded-xl shadow-md pb-8 w-full"
       id={`${league?.id.toString()}`}
     >
       {/* header */}
@@ -23,7 +23,7 @@ function League({ league, matchs }: props) {
           className="h-8 w-8"
           unoptimized
         />
-        <p className="text-md text-gray-800">{league?.name}</p>
+        <p className="text-md text-gray-800 dark:text-gray-200">{league?.name}</p>
       </div>
       {/* matchs */}
       {matchs?.map((item) => (
