@@ -24,7 +24,7 @@ function SideBar({ isOpen }: propss) {
 
   return (
     <div
-      className={`top-[65px] left-0 w-[100vw] overflow-y-scroll bg-blue-50 fixed sidebar-content ease-in-out duration-300 flex justify-start md:h-[100vh] md:w-56  ${
+      className={`top-[65px] left-0 w-[100vw] overflow-y-scroll bg-blue-50 dark:bg-gray-800 fixed sidebar-content ease-in-out duration-300 flex justify-start md:h-[100vh] md:w-56  ${
         isOpen ? "md:left-44 translate-x-0 md:shadow-2xl" : "-translate-x-full"
       }`}
     >

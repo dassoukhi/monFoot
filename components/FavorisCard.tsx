@@ -60,10 +60,10 @@ function FavorisCard({ favorites }: props) {
           />
         </div>
       ) : (
-        <div className="bg-slate-50 flex-1 h-1/2 py-4 px-8 flex flex-col gap-4 rounded-xl shadow-md w-full">
+        <div className="bg-slate-50 dark:bg-gray-800 flex-1 h-1/2 py-4 px-8 flex flex-col gap-4 rounded-xl shadow-md w-full">
           {!favorites && (
             <div className="h-4/6 flex justify-center items-center flex-col gap-5">
-              <p className="text-gray-500 text-sm">
+              <p className="text-gray-500 dark:text-gray-400 text-sm">
                 {"Vous n'avez pas d'équipe(s) favorite(s)"}
               </p>
               <Button

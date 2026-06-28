@@ -13,21 +13,21 @@ function ItemBar({ name, path, Icon }: props) {
   return (
     <Link href={name === "Menu" ? "#" : path}>
       <div
-        className={`text-xs flex flex-col items-center cursor-pointer md:flex-row md:gap-3 md:p-2 md:hover:bg-slate-300 duration-300 ease-in-out text-gray-700 ${
-          active && "md:bg-slate-300"
+        className={`text-xs flex flex-col items-center cursor-pointer md:flex-row md:gap-3 md:p-2 md:hover:bg-slate-300 dark:md:hover:bg-gray-700 duration-300 ease-in-out text-gray-700 dark:text-gray-300 ${
+          active && "md:bg-slate-300 dark:md:bg-gray-700"
         }`}
       >
         {Icon && (
           <Icon
             className={`h-6 w-6 ${
-              active ? "text-gray-800" : "text-gray-400"
-            } hover:text-gray-800`}
+              active ? "text-gray-800 dark:text-gray-200" : "text-gray-400"
+            } hover:text-gray-800 dark:hover:text-gray-200`}
           />
         )}
         <p
           className={`${
-            active ? "text-gray-800" : "text-gray-400"
-          } hover:text-gray-800 md:text-sm`}
+            active ? "text-gray-800 dark:text-gray-200" : "text-gray-400"
+          } hover:text-gray-800 dark:hover:text-gray-200 md:text-sm`}
         >
           {name}
         </p>
