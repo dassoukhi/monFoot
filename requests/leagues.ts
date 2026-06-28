@@ -68,8 +68,8 @@ const getLeagues = async (): Promise<LeaguesResponse> => {
     );
 
     // Filtrer les résultats null et trier
-    const filteredResults = results.filter((r) => r !== null);
-    const sorted = filteredResults.sort((a: any, b: any) => {
+    const filteredResults = results.filter((r): r is LeagueWithMatches[] => r !== null);
+    const sorted = filteredResults.sort((a, b) => {
       return (
         Date.parse(a?.[0]?.matchs?.[0]?.fixture?.date) -
         Date.parse(b?.[0]?.matchs?.[0]?.fixture?.date)
