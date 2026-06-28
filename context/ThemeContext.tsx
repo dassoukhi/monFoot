@@ -42,11 +42,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
-  // Éviter le flash de contenu au chargement
-  if (!mounted) {
-    return <>{children}</>;
-  }
-
+  // Toujours fournir le Provider, même pendant l'hydratation
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
