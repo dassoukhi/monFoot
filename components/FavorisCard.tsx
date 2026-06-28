@@ -51,7 +51,7 @@ function FavorisCard({ favorites }: props) {
       {session?.status == "unauthenticated" ? (
         <div className="w-full h-[70vh] flex flex-col items-center justify-center gap-4">
           <p className="text-sm text-gray-600 text-center">
-            {"Connectez-vous pour voir le match  de vos èquipes favorites"}
+            {"Connectez-vous pour voir les matchs de vos équipes favorites"}
           </p>
           <Button
             text={"Se connecter"}

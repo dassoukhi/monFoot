@@ -1,13 +1,5 @@
-"use client";
-import LoaderCercle from "@/components/LoaderCercle";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.push("/home");
-  });
-  return <LoaderCercle />;
+  redirect("/home");
 }

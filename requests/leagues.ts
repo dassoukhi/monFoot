@@ -14,7 +14,7 @@ const config = (idLeague: string) => {
     maxBodyLength: Infinity,
     url: `https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${idLeague}&next=10`,
     headers: {
-      "X-RapidAPI-Key": "7b3e6cad43msh7f76e0ea302ba91p1f7947jsn714bd238e070",
+      "X-RapidAPI-Key": process.env.API_FOOTBALL_KEY || "",
       "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com",
     },
   };
@@ -27,15 +27,21 @@ const getLeagues = async () => {
     try {
       const cached = await redis?.get(key);
       if (cached) {
-        console.log("✅ Données chargées depuis le cache Redis");
+        if (process.env.NODE_ENV === "development") {
+          console.log("✅ Données chargées depuis le cache Redis");
+        }
         const sortedArray = JSON.parse(cached);
         return sortedArray;
       }
     } catch (cacheError) {
-      console.warn("⚠️ Erreur lecture cache Redis:", cacheError);
+      if (process.env.NODE_ENV === "development") {
+        console.warn("⚠️ Erreur lecture cache Redis:", cacheError);
+      }
     }
 
-    console.log("📡 Chargement des données depuis l'API...");
+    if (process.env.NODE_ENV === "development") {
+      console.log("📡 Chargement des données depuis l'API...");
+    }
 
     // Charger les données depuis l'API avec timeout
     const results = await Promise.all(
@@ -55,7 +61,9 @@ const getLeagues = async () => {
           }
           return null;
         } catch (apiError) {
-          console.warn(`⚠️ Erreur API pour ${league.name}:`, apiError);
+          if (process.env.NODE_ENV === "development") {
+            console.warn(`⚠️ Erreur API pour ${league.name}:`, apiError);
+          }
           return null;
         }
       })
@@ -73,14 +81,20 @@ const getLeagues = async () => {
     // Sauvegarder dans le cache (ne pas bloquer si ça échoue)
     try {
       await redis?.set(key, JSON.stringify(sorted), "PX", MAX_AGE);
-      console.log("✅ Données mises en cache");
+      if (process.env.NODE_ENV === "development") {
+        console.log("✅ Données mises en cache");
+      }
     } catch (cacheError) {
-      console.warn("⚠️ Erreur sauvegarde cache Redis:", cacheError);
+      if (process.env.NODE_ENV === "development") {
+        console.warn("⚠️ Erreur sauvegarde cache Redis:", cacheError);
+      }
     }
 
     return sorted;
   } catch (error) {
-    console.error("❌ Erreur critique dans getLeagues:", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("❌ Erreur critique dans getLeagues:", error);
+    }
     // Retourner un tableau vide au lieu de undefined
     return [];
   }

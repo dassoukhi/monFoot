@@ -18,9 +18,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <head>
-        <link rel="manifest" href="/public/manifest.json" />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <SideBarProvider>
         <NextAuthProvider>

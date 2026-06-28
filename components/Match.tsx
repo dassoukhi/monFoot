@@ -65,12 +65,12 @@ function Match({ fixture, teams }: EventCaming) {
         <div className="flex-1 flex items-center justify-center  gap-4">
           <div className=" flex flex-col justify-center items-center gap-1">
             <Image
-              loader={() => teams?.home?.logo}
               src={teams?.home?.logo}
-              alt="team home"
+              alt={`${teams?.home?.name} logo`}
               width={64}
               height={64}
               className="h-16 w-16"
+              unoptimized
             />
             <p className="text-xs text-gray-800 w-[100px] whitespace-nowrap overflow-hidden text-ellipsis text-center ">
               {teams?.home?.name}
@@ -86,12 +86,12 @@ function Match({ fixture, teams }: EventCaming) {
           {/* <span className="text-2xl">{0}</span> */}
           <div className=" flex flex-col justify-center items-center gap-1">
             <Image
-              loader={() => teams?.away?.logo}
               src={teams?.away?.logo}
-              alt="team away"
+              alt={`${teams?.away?.name} logo`}
               width={64}
               height={64}
               className="h-16 w-16"
+              unoptimized
             />
             <p className="text-xs text-gray-800 w-[100px] whitespace-nowrap overflow-hidden text-ellipsis text-center ">
               {teams?.away?.name}

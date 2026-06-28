@@ -16,12 +16,12 @@ function League({ league, matchs }: props) {
       {/* header */}
       <div className="flex items-center gap-2">
         <Image
-          loader={() => league?.logo}
           src={league?.logo}
           width={64}
           height={64}
-          alt={league?.name}
+          alt={`${league?.name} logo`}
           className="h-8 w-8"
+          unoptimized
         />
         <p className="text-md text-gray-800">{league?.name}</p>
       </div>
