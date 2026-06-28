@@ -4,14 +4,26 @@ import { formatMatchDate, formatMatchTime } from "@/utils/dateFormat";
 import { isMatchLive, isMatchFinished, getStatusLabel } from "@/utils/matchStatus";
 
 function Match({ fixture, teams, goals, score }: EventCaming) {
-  const matchStatus = fixture?.status?.short;
-  const isLive = isMatchLive(matchStatus);
-  const isFinished = isMatchFinished(matchStatus);
+  const matchStatus = fixture?.status?.short || "NS";
+  const isLive = matchStatus ? isMatchLive(matchStatus) : false;
+  const isFinished = matchStatus ? isMatchFinished(matchStatus) : false;
 
   // Scores (priorité: goals > score > null)
   const homeScore = goals?.home ?? score?.fulltime?.home ?? null;
   const awayScore = goals?.away ?? score?.fulltime?.away ?? null;
   const hasScore = homeScore !== null && awayScore !== null;
+
+  // Debug en dev uniquement
+  if (process.env.NODE_ENV === "development" && (isLive || isFinished || hasScore)) {
+    console.log(`🎯 Match ${teams?.home?.name} vs ${teams?.away?.name}:`, {
+      status: matchStatus,
+      isLive,
+      isFinished,
+      hasScore,
+      goals,
+      score,
+    });
+  }
 
   return (
     <div className="bg-blue-50 dark:bg-gray-700 rounded-r-lg flex flex-col pb-2 pt-1 items-center shadow-md relative">
