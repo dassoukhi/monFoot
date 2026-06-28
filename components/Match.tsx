@@ -13,18 +13,6 @@ function Match({ fixture, teams, goals, score }: EventCaming) {
   const awayScore = goals?.away ?? score?.fulltime?.away ?? null;
   const hasScore = homeScore !== null && awayScore !== null;
 
-  // Debug en dev uniquement
-  if (process.env.NODE_ENV === "development" && (isLive || isFinished || hasScore)) {
-    console.log(`🎯 Match ${teams?.home?.name} vs ${teams?.away?.name}:`, {
-      status: matchStatus,
-      isLive,
-      isFinished,
-      hasScore,
-      goals,
-      score,
-    });
-  }
-
   return (
     <div className="bg-blue-50 dark:bg-gray-700 rounded-r-lg flex flex-col pb-2 pt-1 items-center shadow-md relative">
       {/* Badge LIVE */}
