@@ -6,7 +6,7 @@ interface props extends ButtonHTMLAttributes<HTMLButtonElement> {
 function Button({ text, ...res }: props) {
   return (
     <button
-      className="p-[6px] bg-gray-700 text-gray-100 rounded-xl text-xs py-2"
+      className="p-[6px] bg-gray-700 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-100 rounded-xl text-xs py-2 transition-colors"
       {...res}
     >
       {text}

@@ -15,14 +15,14 @@ function SearchBar({ handleData }: props) {
     }
   };
   return (
-    <div className="bg-slate-100 p-2 mb-4 flex rounded-2xl">
-      <MagnifyingGlassIcon className="h-6 w-6 text-gray-600" />
+    <div className="bg-slate-100 dark:bg-gray-700 p-2 mb-4 flex rounded-2xl">
+      <MagnifyingGlassIcon className="h-6 w-6 text-gray-600 dark:text-gray-300" />
       <input
         type="text"
         placeholder="Rechercher"
         value={search}
         onChange={handleChange}
-        className="flex-1 bg-transparent outline-none px-2 text-base text-gray-600 placeholder:text-base"
+        className="flex-1 bg-transparent outline-none px-2 text-base text-gray-600 dark:text-gray-200 placeholder:text-base dark:placeholder:text-gray-400"
       />
     </div>
   );

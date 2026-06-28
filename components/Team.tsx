@@ -29,7 +29,7 @@ function Team({ team, session }: props) {
     }
   };
   return (
-    <div className="flex w-full items-center justify-center p-2 bg-blue-50 gap-4 rounded-md shadow-md">
+    <div className="flex w-full items-center justify-center p-2 bg-blue-50 dark:bg-gray-700 gap-4 rounded-md shadow-md">
       <div className="flex-1 flex items-center  gap-2 pl-2">
         <Image
           loader={() => currentTeam?.logo}
@@ -39,7 +39,7 @@ function Team({ team, session }: props) {
           height={64}
           className="h-8 w-8"
         />
-        <p className="text-xs text-gray-800 w-[180px] whitespace-nowrap overflow-hidden text-ellipsis text-left ">
+        <p className="text-xs text-gray-800 dark:text-gray-200 w-[180px] whitespace-nowrap overflow-hidden text-ellipsis text-left ">
           {currentTeam?.name}
         </p>
       </div>
