@@ -1,5 +1,5 @@
 import { createRedisInstance } from "@/lib/redis";
-import { MAX_AGE } from "@/utils/expireRedis";
+import { MAX_AGE_TODAY } from "@/utils/expireRedis";
 import { leagues } from "@/utils/leagues";
 import { API_CONFIG, API_ENDPOINTS, CACHE_KEYS } from "@/constants/api";
 import axios from "axios";
@@ -8,11 +8,13 @@ moment.locale("fr");
 
 const redis = createRedisInstance();
 
-const config = (idLeague: string) => {
+const config = (idLeague: string, useToday: boolean = true) => {
   return {
     method: "get" as const,
     maxBodyLength: Infinity,
-    url: API_ENDPOINTS.FIXTURES(idLeague, API_CONFIG.MAX_MATCHES),
+    url: useToday
+      ? API_ENDPOINTS.FIXTURES_TODAY(idLeague)
+      : API_ENDPOINTS.FIXTURES_NEXT(idLeague, API_CONFIG.MAX_MATCHES),
     headers: {
       "X-RapidAPI-Key": process.env.API_FOOTBALL_KEY || "",
       "X-RapidAPI-Host": API_CONFIG.RAPID_API_HOST,
@@ -48,7 +50,17 @@ const getLeagues = async (): Promise<LeaguesResponse> => {
     const results = await Promise.all(
       leagues.map(async (league) => {
         try {
-          const res = await axios(config(league.id));
+          // Essayer d'abord les matchs d'aujourd'hui
+          let res = await axios(config(league.id, true));
+
+          // Si pas de matchs aujourd'hui, prendre les prochains
+          if (!res?.data?.response?.length) {
+            if (process.env.NODE_ENV === "development") {
+              console.log(`📅 Pas de matchs aujourd'hui pour ${league.name}, chargement prochains matchs`);
+            }
+            res = await axios(config(league.id, false));
+          }
+
           if (res?.data?.response?.length) {
             return [
               {
@@ -76,11 +88,11 @@ const getLeagues = async (): Promise<LeaguesResponse> => {
       );
     });
 
-    // Sauvegarder dans le cache (ne pas bloquer si ça échoue)
+    // Sauvegarder dans le cache (5min pour voir les changements live)
     try {
-      await redis?.set(key, JSON.stringify(sorted), "PX", MAX_AGE);
+      await redis?.set(key, JSON.stringify(sorted), "PX", MAX_AGE_TODAY);
       if (process.env.NODE_ENV === "development") {
-        console.log("✅ Données mises en cache");
+        console.log("✅ Données mises en cache (5min)");
       }
     } catch (cacheError) {
       if (process.env.NODE_ENV === "development") {
