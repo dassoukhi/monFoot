@@ -9,7 +9,7 @@ import LoaderCercle from "./LoaderCercle";
 import League from "./League";
 
 type props = {
-  favorites: any[];
+  favorites: any[] | null;
 };
 function FavorisCard({ favorites }: props) {
   const router = useRouter();
