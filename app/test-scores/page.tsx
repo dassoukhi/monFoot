@@ -193,11 +193,11 @@ export default function TestScores() {
       </div>
 
       <div className="mt-8 text-sm text-gray-600 dark:text-gray-400">
-        <p>Cette page de test montre les 4 états possibles d'un match :</p>
+        <p>Cette page de test montre les 4 états possibles d&apos;un match :</p>
         <ul className="list-disc ml-5 mt-2">
           <li>EN DIRECT : Badge rouge pulsant + scores rouges</li>
-          <li>MI-TEMPS : Badge rouge + scores rouges + "Mi-temps"</li>
-          <li>TERMINÉ : "Terminé" vert + scores verts</li>
+          <li>MI-TEMPS : Badge rouge + scores rouges + &quot;Mi-temps&quot;</li>
+          <li>TERMINÉ : &quot;Terminé&quot; vert + scores verts</li>
           <li>À VENIR : Date + heure, pas de scores</li>
         </ul>
       </div>

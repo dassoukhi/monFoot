@@ -50,16 +50,8 @@ const getLeagues = async (): Promise<LeaguesResponse> => {
     const results = await Promise.all(
       leagues.map(async (league) => {
         try {
-          // Essayer d'abord les matchs d'aujourd'hui
-          let res = await axios(config(league.id, true));
-
-          // Si pas de matchs aujourd'hui, prendre les prochains
-          if (!res?.data?.response?.length) {
-            if (process.env.NODE_ENV === "development") {
-              console.log(`📅 Pas de matchs aujourd'hui pour ${league.name}, chargement prochains matchs`);
-            }
-            res = await axios(config(league.id, false));
-          }
+          // Charger UNIQUEMENT les matchs d'aujourd'hui (pas de fallback)
+          const res = await axios(config(league.id, true));
 
           if (res?.data?.response?.length) {
             return [

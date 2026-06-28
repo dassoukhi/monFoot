@@ -44,10 +44,18 @@ export default async function Home() {
             )
           ) : (
             <div className="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-400">
-              <p className="text-lg">
-                Aucune donnée disponible pour le moment.
+              <p className="text-2xl mb-4">⚽</p>
+              <p className="text-lg font-semibold">
+                Pas de matchs aujourd&apos;hui
               </p>
-              <p className="text-sm mt-2">Veuillez rafraîchir la page.</p>
+              <p className="text-sm mt-2">
+                {new Date().toLocaleDateString("fr-FR", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric"
+                })}
+              </p>
             </div>
           )}
           <div className="h-12"></div>
