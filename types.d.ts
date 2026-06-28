@@ -61,6 +61,28 @@ type fixture = Fixture;
 type EventCaming = {
   teams: Teams;
   fixture: Fixture;
+  goals?: {
+    home: number | null;
+    away: number | null;
+  };
+  score?: {
+    halftime?: {
+      home: number | null;
+      away: number | null;
+    };
+    fulltime?: {
+      home: number | null;
+      away: number | null;
+    };
+    extratime?: {
+      home: number | null;
+      away: number | null;
+    };
+    penalty?: {
+      home: number | null;
+      away: number | null;
+    };
+  };
 };
 
 type LeagueWithMatches = {
