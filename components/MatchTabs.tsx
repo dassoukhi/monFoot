@@ -18,13 +18,16 @@ export default function MatchTabs({ onTabChange, activeTab }: MatchTabsProps) {
 
   return (
     <div className="w-full bg-white dark:bg-gray-800 shadow-sm sticky top-16 z-10">
-      <div className="flex justify-center items-center gap-4 p-3">
+      <div className="flex justify-center items-center gap-2 md:gap-4 p-2 md:p-3">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
             className={`
-              flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-200
+              flex items-center gap-1 md:gap-2
+              px-3 py-2 md:px-6 md:py-3
+              rounded-lg font-medium transition-all duration-200
+              text-xs md:text-sm
               ${
                 activeTab === tab.id
                   ? "bg-blue-600 text-white shadow-md scale-105"
@@ -32,8 +35,8 @@ export default function MatchTabs({ onTabChange, activeTab }: MatchTabsProps) {
               }
             `}
           >
-            <span className="text-lg">{tab.icon}</span>
-            <span className="text-sm md:text-base">{tab.label}</span>
+            <span className="text-base md:text-lg">{tab.icon}</span>
+            <span className="whitespace-nowrap">{tab.label}</span>
           </button>
         ))}
       </div>
