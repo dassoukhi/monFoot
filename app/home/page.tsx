@@ -15,7 +15,7 @@ export default async function Home() {
       <CategorieTabs />
       <div className="flex w-full">
         <div className="w-44 bg-yellow-100 max-md:hidden "></div>
-        <div className="p-2 w-full flex flex-col md:px-8">
+        <div className="p-2 w-full flex gap-2 flex-col md:px-8">
           {data && data.length > 0 ? (
             data.map(
               (
@@ -31,20 +31,22 @@ export default async function Home() {
                   };
                   matchs: any[];
                 })[],
-                index: Key | null | undefined
+                index: Key | null | undefined,
               ) => {
                 if (item && item?.length) {
                   return (
-                    <div key={index} className="md:px-20">
+                    <div key={index} className="md:px-20 gap-2">
                       <League {...item?.[0]} />
                     </div>
                   );
                 }
-              }
+              },
             )
           ) : (
-            <div className="flex flex-col items-center justify-center h-64 text-gray-500">
-              <p className="text-lg">Aucune donnée disponible pour le moment.</p>
+            <div className="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-400">
+              <p className="text-lg">
+                Aucune donnée disponible pour le moment.
+              </p>
               <p className="text-sm mt-2">Veuillez rafraîchir la page.</p>
             </div>
           )}
