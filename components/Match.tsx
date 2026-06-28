@@ -1,65 +1,14 @@
-import moment from "moment";
 import Image from "next/image";
 import React from "react";
+import { formatMatchDate, formatMatchTime } from "@/utils/dateFormat";
 
-const formatDate = (date: string) => {
-  const current = moment(date);
-  const today = moment();
-  const day = current.date();
-  const month = current.month() + 1;
-
-  if (current.month() === today.month() && current.date() === today.date()) {
-    return "Aujourd'hui";
-  }
-  if (
-    current.month() === today.month() &&
-    current.date() === today.date() + 1
-  ) {
-    return "Demain";
-  }
-  let dayText = "";
-
-  switch (current.day()) {
-    case 0:
-      dayText = "Dim";
-      break;
-    case 1:
-      dayText = "Lun";
-      break;
-    case 2:
-      dayText = "Mar";
-      break;
-    case 3:
-      dayText = "Mer";
-      break;
-    case 4:
-      dayText = "Jeu";
-      break;
-    case 5:
-      dayText = "Ven";
-      break;
-    case 6:
-      dayText = "Sam";
-      break;
-  }
-  return `${dayText},${day}/${month < 10 ? "0" + month : month}`;
-};
-const formatHour = (date: string) => {
-  const current = moment(date);
-  const hour = current.hour();
-  const munites = current?.minutes();
-  let munitesText = munites === 0 ? "00" : munites;
-
-  return `${hour}:${munitesText}`;
-};
 function Match({ fixture, teams }: EventCaming) {
-  //   console.log("fixture:", fixture, "temas:", teams);
 
   return (
     <div className="bg-blue-50 rounded-r-lg flex flex-col pb-2 pt-1 items-center shadow-md">
       <div className="flex flex-col items-center">
-        <p className="text-xs text-gray-500">{formatDate(fixture?.date)}</p>
-        <p className="text-xs text-gray-500">{formatHour(fixture?.date)}</p>
+        <p className="text-xs text-gray-500">{formatMatchDate(fixture?.date)}</p>
+        <p className="text-xs text-gray-500">{formatMatchTime(fixture?.date)}</p>
       </div>
       <div className="flex w-full px-4 items-center ">
         <div className="flex-1 flex items-center justify-center  gap-4">

@@ -4,7 +4,8 @@ type Team = {
   name: string;
   checked: boolean;
 };
-type league = {
+
+type League = {
   id: number;
   name: string;
   country: string;
@@ -13,30 +14,34 @@ type league = {
   season: number;
   round: string;
 };
-type teams = {
-  home: {
-    id: number;
-    name: string;
-    logo: string;
-    winner: null;
-  };
-  away: {
-    id: number;
-    name: string;
-    logo: string;
-    winner: null;
-  };
+
+// Alias pour compatibilité
+type league = League;
+
+type MatchTeam = {
+  id: number;
+  name: string;
+  logo: string;
+  winner: boolean | null;
 };
 
-type fixture = {
+type Teams = {
+  home: MatchTeam;
+  away: MatchTeam;
+};
+
+// Alias pour compatibilité
+type teams = Teams;
+
+type Fixture = {
   id: number;
-  referee: null;
+  referee: string | null;
   timezone: string;
   date: string;
   timestamp: number;
   periods: {
-    first: null;
-    second: null;
+    first: number | null;
+    second: number | null;
   };
   venue: {
     id: number;
@@ -46,10 +51,27 @@ type fixture = {
   status: {
     long: string;
     short: string;
-    elapsed: null;
+    elapsed: number | null;
   };
 };
+
+// Alias pour compatibilité
+type fixture = Fixture;
+
 type EventCaming = {
-  teams: teams;
-  fixture: fixture;
+  teams: Teams;
+  fixture: Fixture;
+};
+
+type LeagueWithMatches = {
+  league: League;
+  matchs: EventCaming[];
+};
+
+type LeaguesResponse = LeagueWithMatches[][];
+
+type FavoriteTeam = {
+  id: string;
+  userId: string;
+  teamId: string;
 };

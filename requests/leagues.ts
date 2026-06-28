@@ -1,27 +1,28 @@
 import { createRedisInstance } from "@/lib/redis";
 import { MAX_AGE } from "@/utils/expireRedis";
 import { leagues } from "@/utils/leagues";
+import { API_CONFIG, API_ENDPOINTS, CACHE_KEYS } from "@/constants/api";
 import axios from "axios";
 import moment from "moment";
 moment.locale("fr");
 
 const redis = createRedisInstance();
-// milliseconds
+
 const config = (idLeague: string) => {
-  const year = moment().year();
   return {
-    method: "get",
+    method: "get" as const,
     maxBodyLength: Infinity,
-    url: `https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${idLeague}&next=10`,
+    url: API_ENDPOINTS.FIXTURES(idLeague, API_CONFIG.MAX_MATCHES),
     headers: {
       "X-RapidAPI-Key": process.env.API_FOOTBALL_KEY || "",
-      "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com",
+      "X-RapidAPI-Host": API_CONFIG.RAPID_API_HOST,
     },
+    timeout: API_CONFIG.TIMEOUT,
   };
 };
-const getLeagues = async () => {
+const getLeagues = async (): Promise<LeaguesResponse> => {
   try {
-    const key = "leaguesDataKey";
+    const key = CACHE_KEYS.LEAGUES;
 
     // Essayer de récupérer depuis le cache
     try {
@@ -47,10 +48,7 @@ const getLeagues = async () => {
     const results = await Promise.all(
       leagues.map(async (league) => {
         try {
-          const res = await axios({
-            ...config(league.id),
-            timeout: 8000, // 8 secondes timeout
-          });
+          const res = await axios(config(league.id));
           if (res?.data?.response?.length) {
             return [
               {
