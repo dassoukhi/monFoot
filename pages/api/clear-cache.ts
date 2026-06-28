@@ -16,19 +16,31 @@ export default async function handler(
   }
 
   try {
-    // Vider le cache des leagues
-    await redis?.del("leaguesDataKey");
+    const clearedKeys: string[] = [];
 
-    // Optionnel: vider aussi les caches live
-    const keys = await redis?.keys("live:*");
-    if (keys && keys.length > 0) {
-      await redis?.del(...keys);
+    // Vider le cache des leagues (ancien)
+    await redis?.del("leaguesDataKey");
+    clearedKeys.push("leaguesDataKey");
+
+    // Vider les caches des nouveaux types
+    await redis?.del("leagues:today");
+    clearedKeys.push("leagues:today");
+    await redis?.del("leagues:upcoming");
+    clearedKeys.push("leagues:upcoming");
+    await redis?.del("leagues:live");
+    clearedKeys.push("leagues:live");
+
+    // Vider aussi les caches live individuels
+    const liveKeys = await redis?.keys("live:*");
+    if (liveKeys && liveKeys.length > 0) {
+      await redis?.del(...liveKeys);
+      clearedKeys.push(...liveKeys);
     }
 
     return res.status(200).json({
       success: true,
       message: "Cache vidé avec succès !",
-      clearedKeys: ["leaguesDataKey", ...(keys || [])]
+      clearedKeys
     });
   } catch (error) {
     console.error("Error clearing cache:", error);

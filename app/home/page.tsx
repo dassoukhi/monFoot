@@ -1,23 +1,71 @@
+"use client";
+
 import CategorieTabs from "@/components/CategorieTabs";
 import League from "@/components/League";
-import getLeagues from "@/requests/leagues";
-import { JSX, Key } from "react";
+import MatchTabs from "@/components/MatchTabs";
+import LoaderCercle from "@/components/LoaderCercle";
+import { useLeaguesByType } from "@/hooks/useLeaguesByType";
+import { JSX, Key, useState } from "react";
 
-// Opt out of caching for all data requests in the route segment
-export const dynamic = "force-dynamic";
-export default async function Home() {
-  const data = await getLeagues();
+type TabType = "today" | "upcoming" | "live";
+
+export default function Home() {
+  const [activeTab, setActiveTab] = useState<TabType>("today");
+  const { leagues, isLoading, isError } = useLeaguesByType(activeTab);
+
+  const getEmptyMessage = () => {
+    switch (activeTab) {
+      case "today":
+        return {
+          emoji: "⚽",
+          title: "Pas de matchs aujourd'hui",
+          subtitle: new Date().toLocaleDateString("fr-FR", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }),
+        };
+      case "live":
+        return {
+          emoji: "🔴",
+          title: "Aucun match en direct",
+          subtitle: "Revenez plus tard pendant les heures de match",
+        };
+      case "upcoming":
+        return {
+          emoji: "🔜",
+          title: "Pas de matchs à venir",
+          subtitle: "Vérifiez plus tard",
+        };
+    }
+  };
+
+  const emptyMsg = getEmptyMessage();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       <div className="h-16"></div>
-      {/* categorie tabs */}
+
+      {/* Onglets de navigation */}
+      <MatchTabs activeTab={activeTab} onTabChange={setActiveTab} />
+
+      {/* Categorie tabs */}
       <CategorieTabs />
+
       <div className="flex w-full">
         <div className="w-44 bg-yellow-100 max-md:hidden "></div>
         <div className="p-2 w-full flex gap-2 flex-col md:px-8">
-          {data && data.length > 0 ? (
-            data.map(
+          {isLoading ? (
+            <LoaderCercle />
+          ) : isError ? (
+            <div className="flex flex-col items-center justify-center h-64 text-red-500 dark:text-red-400">
+              <p className="text-2xl mb-4">❌</p>
+              <p className="text-lg font-semibold">Erreur de chargement</p>
+              <p className="text-sm mt-2">Veuillez réessayer plus tard</p>
+            </div>
+          ) : leagues && leagues.length > 0 ? (
+            leagues.map(
               (
                 item: (JSX.IntrinsicAttributes & {
                   league: {
@@ -44,18 +92,9 @@ export default async function Home() {
             )
           ) : (
             <div className="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-400">
-              <p className="text-2xl mb-4">⚽</p>
-              <p className="text-lg font-semibold">
-                Pas de matchs aujourd&apos;hui
-              </p>
-              <p className="text-sm mt-2">
-                {new Date().toLocaleDateString("fr-FR", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric"
-                })}
-              </p>
+              <p className="text-2xl mb-4">{emptyMsg.emoji}</p>
+              <p className="text-lg font-semibold">{emptyMsg.title}</p>
+              <p className="text-sm mt-2">{emptyMsg.subtitle}</p>
             </div>
           )}
           <div className="h-12"></div>
@@ -64,3 +103,4 @@ export default async function Home() {
     </main>
   );
 }
+
