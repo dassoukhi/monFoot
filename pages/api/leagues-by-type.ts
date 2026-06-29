@@ -70,9 +70,12 @@ export default async function handler(
       };
     };
 
+    // Limiter à 5 ligues principales pour éviter rate limit
+    const leaguesToLoad = leagues.slice(0, 5);
+
     // Charger les données
     const results = await Promise.all(
-      leagues.map(async (league) => {
+      leaguesToLoad.map(async (league) => {
         try {
           const res = await axios(getConfig(league.id));
 
@@ -128,8 +131,11 @@ export default async function handler(
 
     // Sauvegarder dans le cache
     try {
-      // Cache plus court pour live (1min), moyen pour today (5min), long pour upcoming (30min)
-      const cacheTime = type === "live" ? 60000 : type === "today" ? MAX_AGE_TODAY : 1800000;
+      // Cache optimisé pour éviter rate limit:
+      // - live: 2min (au lieu de 1min)
+      // - today: 10min (au lieu de 5min)
+      // - upcoming: 1h (au lieu de 30min)
+      const cacheTime = type === "live" ? 120000 : type === "today" ? 600000 : 3600000;
       await redis?.set(cacheKey, JSON.stringify(sorted), "PX", cacheTime);
       if (process.env.NODE_ENV === "development") {
         console.log(`✅ Leagues ${type} mises en cache (${cacheTime / 1000}s)`);
