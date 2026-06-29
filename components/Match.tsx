@@ -21,7 +21,7 @@ function Match({ fixture, teams, goals, score, events }: EventCaming) {
   const awayGoals = goalEvents.filter((event) => event.team.id === teams.away.id);
 
   return (
-    <div className="bg-blue-50 dark:bg-gray-700 rounded-r-lg flex flex-col pb-2 pt-2 items-center shadow-md relative">
+    <div className="bg-blue-50 dark:bg-gray-700 rounded-lg flex flex-col pb-2 pt-2 items-center shadow-md relative">
       {/* Badge LIVE */}
       {isLive && (
         <div className="absolute top-2 right-2 flex items-center gap-1 bg-red-600 text-white px-2 py-1 rounded-full text-xs font-bold animate-pulse">
