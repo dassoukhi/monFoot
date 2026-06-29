@@ -22,7 +22,8 @@ export default async function handler(
   try {
     const { type = "today" } = req.query as { type?: "today" | "upcoming" | "live" };
 
-    const cacheKey = `leagues:${type}`;
+    // v2 pour forcer le refresh avec les events
+    const cacheKey = `leagues:${type}:v2`;
 
     // Vérifier le cache
     try {
@@ -95,10 +96,55 @@ export default async function handler(
               });
             }
 
+            // Charger les events (buteurs) pour matchs LIVE et FINISHED
+            const matchesWithEvents = await Promise.all(
+              sortedMatches.map(async (match: any) => {
+                const status = match.fixture.status.short;
+                const shouldLoadEvents =
+                  status === "FT" ||
+                  status === "LIVE" ||
+                  status === "1H" ||
+                  status === "2H" ||
+                  status === "HT";
+
+                // Charger events si match terminé ou en cours ET il y a des buts
+                if (shouldLoadEvents && (match.goals?.home > 0 || match.goals?.away > 0)) {
+                  try {
+                    if (process.env.NODE_ENV === "development") {
+                      console.log(`📊 Chargement events pour ${match.teams.home.name} vs ${match.teams.away.name}`);
+                    }
+
+                    const eventRes = await axios({
+                      method: "get",
+                      url: `https://${API_CONFIG.RAPID_API_HOST}/v3/fixtures?id=${match.fixture.id}`,
+                      headers: {
+                        "X-RapidAPI-Key": process.env.API_FOOTBALL_KEY || "",
+                        "X-RapidAPI-Host": API_CONFIG.RAPID_API_HOST,
+                      },
+                      timeout: API_CONFIG.TIMEOUT,
+                    });
+
+                    if (eventRes?.data?.response?.[0]?.events) {
+                      return {
+                        ...match,
+                        events: eventRes.data.response[0].events,
+                      };
+                    }
+                  } catch (eventError) {
+                    if (process.env.NODE_ENV === "development") {
+                      console.warn(`⚠️ Erreur chargement events match ${match.fixture.id}`);
+                    }
+                  }
+                }
+
+                return match;
+              })
+            );
+
             return [
               {
                 league: res.data.response?.[0]?.league,
-                matchs: sortedMatches,
+                matchs: matchesWithEvents,
               },
             ];
           }

@@ -111,31 +111,31 @@ function Match({ fixture, teams, goals, score, events }: EventCaming) {
 
       {/* Buteurs */}
       {hasScore && goalEvents.length > 0 && (
-        <div className="w-full px-4 mt-2 flex flex-col gap-1">
+        <div className="w-full px-4 md:px-8 mt-1 flex flex-col gap-0.5">
           {/* Fusionner tous les buteurs et les afficher par ligne */}
           {(() => {
             const maxGoals = Math.max(homeGoals.length, awayGoals.length);
             return Array.from({ length: maxGoals }).map((_, index) => (
-              <div key={index} className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
+              <div key={index} className="flex items-center gap-4 text-xs text-gray-600 dark:text-gray-400">
                 {/* Buteur équipe domicile */}
-                <div className="flex items-center gap-1 flex-1">
+                <div className="flex items-center gap-1 flex-1 justify-end">
                   {homeGoals[index] ? (
                     <>
-                      <span>⚽</span>
+                      <span className="text-[10px]">⚽</span>
                       <span className="font-medium">{homeGoals[index].player.name}</span>
-                      <span className="text-gray-400 dark:text-gray-500">{homeGoals[index].time.elapsed}&apos;</span>
+                      <span className="text-gray-400 dark:text-gray-500 text-[10px]">{homeGoals[index].time.elapsed}&apos;</span>
                     </>
                   ) : (
                     <span className="invisible">placeholder</span>
                   )}
                 </div>
                 {/* Buteur équipe extérieure */}
-                <div className="flex items-center justify-end gap-1 flex-1">
+                <div className="flex items-center justify-start gap-1 flex-1">
                   {awayGoals[index] ? (
                     <>
-                      <span className="text-gray-400 dark:text-gray-500">{awayGoals[index].time.elapsed}&apos;</span>
+                      <span className="text-gray-400 dark:text-gray-500 text-[10px]">{awayGoals[index].time.elapsed}&apos;</span>
                       <span className="font-medium">{awayGoals[index].player.name}</span>
-                      <span>⚽</span>
+                      <span className="text-[10px]">⚽</span>
                     </>
                   ) : (
                     <span className="invisible">placeholder</span>
