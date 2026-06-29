@@ -40,6 +40,32 @@ export default function TestScores() {
       home: 2,
       away: 1,
     },
+    events: [
+      {
+        time: { elapsed: 12 },
+        team: { id: 1, name: "Paris Saint-Germain" },
+        player: { id: 1, name: "Mbappé" },
+        assist: { id: 2, name: "Neymar" },
+        type: "Goal",
+        detail: "Normal Goal",
+      },
+      {
+        time: { elapsed: 35 },
+        team: { id: 1, name: "Paris Saint-Germain" },
+        player: { id: 2, name: "Neymar" },
+        assist: { id: null, name: null },
+        type: "Goal",
+        detail: "Normal Goal",
+      },
+      {
+        time: { elapsed: 67 },
+        team: { id: 2, name: "Olympique Marseille" },
+        player: { id: 3, name: "Payet" },
+        assist: { id: 4, name: "Thauvin" },
+        type: "Goal",
+        detail: "Normal Goal",
+      },
+    ],
   };
 
   // Match TERMINÉ
@@ -82,6 +108,32 @@ export default function TestScores() {
         away: 0,
       },
     },
+    events: [
+      {
+        time: { elapsed: 25 },
+        team: { id: 3, name: "Real Madrid" },
+        player: { id: 1, name: "Benzema" },
+        assist: { id: 2, name: "Modric" },
+        type: "Goal",
+        detail: "Normal Goal",
+      },
+      {
+        time: { elapsed: 58 },
+        team: { id: 3, name: "Real Madrid" },
+        player: { id: 3, name: "Vinicius Jr" },
+        assist: { id: 1, name: "Benzema" },
+        type: "Goal",
+        detail: "Normal Goal",
+      },
+      {
+        time: { elapsed: 82 },
+        team: { id: 3, name: "Real Madrid" },
+        player: { id: 1, name: "Benzema" },
+        assist: { id: null, name: null },
+        type: "Goal",
+        detail: "Normal Goal",
+      },
+    ],
   };
 
   // Match À VENIR

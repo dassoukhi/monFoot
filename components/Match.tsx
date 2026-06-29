@@ -3,7 +3,7 @@ import React from "react";
 import { formatMatchDate, formatMatchTime } from "@/utils/dateFormat";
 import { isMatchLive, isMatchFinished, getStatusLabel } from "@/utils/matchStatus";
 
-function Match({ fixture, teams, goals, score }: EventCaming) {
+function Match({ fixture, teams, goals, score, events }: EventCaming) {
   const matchStatus = fixture?.status?.short || "NS";
   const isLive = matchStatus ? isMatchLive(matchStatus) : false;
   const isFinished = matchStatus ? isMatchFinished(matchStatus) : false;
@@ -12,6 +12,13 @@ function Match({ fixture, teams, goals, score }: EventCaming) {
   const homeScore = goals?.home ?? score?.fulltime?.home ?? null;
   const awayScore = goals?.away ?? score?.fulltime?.away ?? null;
   const hasScore = homeScore !== null && awayScore !== null;
+
+  // Filtrer les buts (exclure own goals qui comptent pour l'équipe adverse)
+  const goalEvents = events?.filter((event) => event.type === "Goal" && event.detail !== "Own Goal") || [];
+
+  // Séparer les buteurs par équipe
+  const homeGoals = goalEvents.filter((event) => event.team.id === teams.home.id);
+  const awayGoals = goalEvents.filter((event) => event.team.id === teams.away.id);
 
   return (
     <div className="bg-blue-50 dark:bg-gray-700 rounded-r-lg flex flex-col pb-2 pt-2 items-center shadow-md relative">
@@ -101,6 +108,44 @@ function Match({ fixture, teams, goals, score }: EventCaming) {
           </p>
         </div>
       </div>
+
+      {/* Buteurs */}
+      {hasScore && goalEvents.length > 0 && (
+        <div className="w-full px-4 mt-2 flex flex-col gap-1">
+          {/* Fusionner tous les buteurs et les afficher par ligne */}
+          {(() => {
+            const maxGoals = Math.max(homeGoals.length, awayGoals.length);
+            return Array.from({ length: maxGoals }).map((_, index) => (
+              <div key={index} className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
+                {/* Buteur équipe domicile */}
+                <div className="flex items-center gap-1 flex-1">
+                  {homeGoals[index] ? (
+                    <>
+                      <span>⚽</span>
+                      <span className="font-medium">{homeGoals[index].player.name}</span>
+                      <span className="text-gray-400 dark:text-gray-500">{homeGoals[index].time.elapsed}&apos;</span>
+                    </>
+                  ) : (
+                    <span className="invisible">placeholder</span>
+                  )}
+                </div>
+                {/* Buteur équipe extérieure */}
+                <div className="flex items-center justify-end gap-1 flex-1">
+                  {awayGoals[index] ? (
+                    <>
+                      <span className="text-gray-400 dark:text-gray-500">{awayGoals[index].time.elapsed}&apos;</span>
+                      <span className="font-medium">{awayGoals[index].player.name}</span>
+                      <span>⚽</span>
+                    </>
+                  ) : (
+                    <span className="invisible">placeholder</span>
+                  )}
+                </div>
+              </div>
+            ));
+          })()}
+        </div>
+      )}
     </div>
   );
 }

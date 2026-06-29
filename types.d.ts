@@ -58,6 +58,26 @@ type Fixture = {
 // Alias pour compatibilité
 type fixture = Fixture;
 
+type MatchEvent = {
+  time: {
+    elapsed: number;
+  };
+  team: {
+    id: number;
+    name: string;
+  };
+  player: {
+    id: number;
+    name: string;
+  };
+  assist: {
+    id: number | null;
+    name: string | null;
+  };
+  type: string;
+  detail: string;
+};
+
 type EventCaming = {
   teams: Teams;
   fixture: Fixture;
@@ -83,6 +103,7 @@ type EventCaming = {
       away: number | null;
     };
   };
+  events?: MatchEvent[];
 };
 
 type LeagueWithMatches = {
